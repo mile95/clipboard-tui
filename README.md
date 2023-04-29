@@ -7,11 +7,11 @@ Clipboard [TUI](https://en.wikipedia.org/wiki/Text-based_user_interface) for cli
 
 ## Installation
 
-    pip3 install -r requirements.txt
+    pip3 install clipboard-tui
 
 ## Run
 
-    python3 main.py
+    clipboard-tui
 
 ## Exit applicaiton
 
