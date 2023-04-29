@@ -60,7 +60,6 @@ def render(stdscr) -> int:
     # Remove cursor
     curses.curs_set(0)
 
-    # TODO: Is this needed?
     stdscr.nodelay(True)
 
     while True:
