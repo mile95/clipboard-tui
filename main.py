@@ -25,14 +25,16 @@ def update(stdscr, history) -> None:
     stdscr.addstr(1, INDENT, "Clipboard History", curses.A_UNDERLINE)
 
     current_pos = START_POS
+    _, cols = stdscr.getmaxyx()
 
     for entry, ts in reversed(history):
-        stdscr.addstr(current_pos + 1, INDENT, f"{ts}:", curses.color_pair(3))
+        stdscr.addstr(current_pos + 1, INDENT, f"{ts}", curses.color_pair(2))
         current_pos += 1
         for line in entry.splitlines():
-            # TODO: Handle wrapping of lines > cols
-            stdscr.addstr(current_pos + 1, INDENT, line, curses.color_pair(1))
-            current_pos += 1
+            # Wrap the line
+            for ss in split_string(line, cols - 4):
+                stdscr.addstr(current_pos + 1, INDENT, ss, curses.color_pair(1))
+                current_pos += 1
         current_pos += 1
     current_pos += 1
 
@@ -66,6 +68,13 @@ def render(stdscr) -> int:
         if stdscr.getch() == ord("q"):
             return 0
         curses.napms(2 * 1000)
+
+
+def split_string(s: str, sub_length: int):
+    substrings = []
+    for i in range(0, len(s), sub_length):
+        substrings.append(s[i : i + sub_length])
+    return substrings
 
 
 def main() -> int:
